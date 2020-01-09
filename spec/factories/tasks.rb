@@ -5,7 +5,7 @@ FactoryBot.define do
     from = Date.parse("2019/08/01")
     to   = Date.parse("2019/12/31")
     deadline { Random.rand(from..to) }
-    completion_date { nil }
+    completion_date { :done }
     trait :done do
       completion_date { 1.day.ago }
     end
