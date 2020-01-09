@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
-  let(:project) { FactoryBot.create(:project) }
-  let(:task) { FactoryBot.create(:task, project_id: project.id) }
+  let(:project) { create(:project) }
+  let(:task) { create(:task, project_id: project.id) }
   describe 'Task一覧' do
     context '正常系' do
       it '一覧ページにアクセスした場合、Taskが表示されること' do
@@ -58,8 +58,8 @@ RSpec.describe 'Task', type: :system do
     context '正常系' do
       it 'Taskを編集した場合、一覧画面で編集後の内容が表示されること' do
         # FIXME: テストが失敗するので修正してください
-        project = FactoryBot.create(:project)
-        task = FactoryBot.create(:task, project_id: project.id)
+        project = create(:project)
+        task = create(:task, project_id: project.id)
         visit edit_project_task_path(project, task)
         fill_in 'Deadline', with: Time.current
         click_button 'Update Task'
@@ -80,7 +80,7 @@ RSpec.describe 'Task', type: :system do
 
       it '既にステータスが完了のタスクのステータスを変更した場合、Taskの完了日が更新されないこと' do
         # TODO: FactoryBotのtraitを利用してください
-        task = FactoryBot.create(:task, :done, project_id: project.id, status: :done)
+        task = create(:task, :done, project_id: project.id, status: :done)
         visit edit_project_task_path(project, task)
         select 'todo', from: 'Status'
         click_button 'Update Task'
@@ -95,7 +95,7 @@ RSpec.describe 'Task', type: :system do
     context '正常系' do
       # FIXME: テストが失敗するので修正してください
       it 'Taskが削除されること' do
-        task = FactoryBot.create(:task, project_id: project.id)
+        task = create(:task, project_id: project.id)
         visit project_tasks_path(project)
         click_link 'Destroy'
         page.driver.browser.switch_to.alert.accept
